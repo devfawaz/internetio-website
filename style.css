@@ -169,18 +169,18 @@ button { font: inherit; cursor: pointer; }
 }
 .search-spark, .search-halo {
   position: absolute; left: 0; top: 0;
-  offset-path: var(--orbit); offset-rotate: auto;
+  offset-path: var(--orbit); offset-rotate: 0deg;
   animation: drift-around 10s linear infinite;
   pointer-events: none;
 }
 .search-spark {
-  width: 220px; height: 60px;
+  width: 140px; height: 140px;
   background: radial-gradient(closest-side, #8fe6ff 0%, #32c6fe 30%, rgba(50, 198, 254, 0.55) 62%, rgba(50, 198, 254, 0) 100%);
 }
 .search-halo {
-  z-index: 0; width: 200px; height: 70px;
-  background: radial-gradient(closest-side, rgba(50, 198, 254, 0.45), rgba(50, 198, 254, 0));
-  filter: blur(16px);
+  z-index: 0; width: 120px; height: 120px;
+  background: radial-gradient(closest-side, rgba(50, 198, 254, 0.35), rgba(50, 198, 254, 0));
+  filter: blur(14px);
 }
 @keyframes drift-around { from { offset-distance: 0%; } to { offset-distance: 100%; } }
 
