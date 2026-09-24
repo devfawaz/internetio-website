@@ -131,12 +131,16 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   );
 }
 
-// Walkthrough video — YouTube, muted autoplay while in view, paused when scrolled away
+// Walkthrough video — YouTube, muted autoplay once it scrolls into view, no YouTube UI.
+// YouTube still flashes its own buttons for a few seconds whenever playback starts or
+// resumes, and shows an end screen when a video finishes. So: the player stays invisible
+// until it has played cleanly for a moment, it is never paused afterwards (resuming would
+// bring the buttons back), and it loops by seeking to the start before the end screen.
 (() => {
   const box = document.getElementById("video");
-  const cover = box.querySelector(".video__cover");
   const id = box.dataset.youtubeId;
-  let player, ready = false, inView = false, userStarted = false, apiRequested = false;
+  const soundBtn = box.querySelector(".video__sound");
+  let player, ready = false, inView = false, started = false, apiRequested = false, revealTimer;
 
   function loadApi() {
     if (apiRequested) return;
@@ -144,10 +148,16 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     window.onYouTubeIframeAPIReady = () => {
       player = new YT.Player("yt-player", {
         videoId: id,
-        playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, loop: 1, playlist: id, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3 },
+        playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3 },
         events: {
-          onReady: () => { ready = true; sync(); },
-          onStateChange: watchChrome,
+          onReady: () => { ready = true; maybeStart(); },
+          onStateChange: (e) => {
+            clearTimeout(revealTimer);
+            if (e.data === YT.PlayerState.PLAYING && !box.classList.contains("has-started")) {
+              revealTimer = setTimeout(() => box.classList.add("has-started"), 3500);
+            }
+            if (e.data === YT.PlayerState.ENDED) { player.seekTo(0, true); player.playVideo(); }
+          },
         },
       });
     };
@@ -156,7 +166,17 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     document.head.appendChild(tag);
   }
 
-  const soundBtn = box.querySelector(".video__sound");
+  function maybeStart() {
+    if (!ready || !inView || started) return;
+    started = true;
+    player.playVideo();
+    // loop just before the end so YouTube's end screen never shows
+    setInterval(() => {
+      const d = player.getDuration(), t = player.getCurrentTime();
+      if (d && d - t < 0.6) player.seekTo(0, true);
+    }, 250);
+  }
+
   function setSound(on) {
     if (!ready) return;
     if (on) { player.unMute(); player.setVolume(80); } else player.mute();
@@ -165,48 +185,12 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   }
   soundBtn.addEventListener("click", () => setSound(player.isMuted()));
 
-  // YouTube flashes its title bar whenever playback (re)starts — first play, resume after
-  // scrolling back, each loop — plus overlays on pause and at the end screen, even with
-  // controls off. Keep our cover on top until playback has run uninterrupted for a few seconds.
-  let chromeTimer, playingSince = 0;
-  function watchChrome(e) {
-    clearInterval(chromeTimer);
-    const playing = e && e.data === YT.PlayerState.PLAYING;
-    playingSince = playing ? performance.now() : 0;
-    const check = () => {
-      const t = player.getCurrentTime(), d = player.getDuration();
-      const settled = playingSince && performance.now() - playingSince > 3500;
-      box.classList.toggle("is-playing", Boolean(settled && (!d || d - t > 1.5)));
-    };
-    check();
-    if (playing) chromeTimer = setInterval(check, 200);
-  }
-
-  function sync() {
-    if (!ready) return;
-    const state = player.getPlayerState();
-    if (inView && state !== YT.PlayerState.PLAYING) player.playVideo();
-    if (!inView && state === YT.PlayerState.PLAYING) player.pauseVideo();
-  }
-
-  // Clicking the cover plays with sound
-  cover.addEventListener("click", () => {
-    userStarted = true;
-    loadApi();
-    const start = () => { setSound(true); player.playVideo(); };
-    if (ready) start();
-    else {
-      const wait = setInterval(() => { if (ready) { clearInterval(wait); start(); } }, 100);
-    }
-  });
-
-  if (!("IntersectionObserver" in window)) return;
-  // Load the player just before it scrolls in; play once half of it is visible
+  if (!("IntersectionObserver" in window)) { inView = true; loadApi(); return; }
   new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) loadApi();
   }, { rootMargin: "400px 0px" }).observe(box);
   new IntersectionObserver(([e]) => {
     inView = e.intersectionRatio >= 0.5;
-    sync();
+    maybeStart();
   }, { threshold: [0, 0.5] }).observe(box);
 })();

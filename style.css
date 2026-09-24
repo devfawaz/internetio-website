@@ -276,14 +276,22 @@ button { font: inherit; cursor: pointer; }
 }
 .section__head p { font-size: 16px; line-height: 24px; }
 
-/* Video — YouTube player sits under a cover that fades once playback starts */
+/* Video — the player is taller than the frame so YouTube letterboxes the video into bars
+   above/below it; its title bar and overlays live in those bars, which the frame crops off. */
 .video {
+  --crop: 80px;
   position: relative; width: 100%; max-width: 1200px; aspect-ratio: 1200 / 675;
-  border-radius: 24px; overflow: hidden; background: var(--neutral-1000);
+  border-radius: 24px; overflow: hidden;
+  background: radial-gradient(ellipse at center, #fafafa, #e4e4e4);
   isolation: isolate;
 }
-.video__player, .video__player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.video__player iframe { pointer-events: none; }
+/* YT.Player swaps the placeholder div for its iframe, so target both */
+.video__player, .video > iframe {
+  position: absolute; left: 0; right: 0; top: calc(var(--crop) * -1);
+  width: 100%; height: calc(100% + var(--crop) * 2); border: 0;
+  opacity: 0; transition: opacity .8s ease; pointer-events: none;
+}
+.video.has-started > iframe { opacity: 1; }
 .video__sound {
   position: absolute; right: 20px; bottom: 20px; z-index: 3;
   width: 44px; height: 44px; display: grid; place-items: center;
@@ -292,30 +300,11 @@ button { font: inherit; cursor: pointer; }
   opacity: 0; transform: translateY(6px); pointer-events: none;
   transition: opacity .4s, transform .4s, background-color .2s;
 }
-.video.is-playing .video__sound { opacity: 1; transform: none; pointer-events: auto; }
+.video.has-started .video__sound { opacity: 1; transform: none; pointer-events: auto; }
 .video__sound:hover { background: rgba(17, 17, 17, 0.65); }
 .video__sound .icon-on { display: none; }
 .video__sound[aria-pressed="true"] .icon-on { display: block; }
 .video__sound[aria-pressed="true"] .icon-off { display: none; }
-.video__cover {
-  position: absolute; inset: 0; z-index: 2;
-  padding: 0; border: 0; background: none; border-radius: 24px; overflow: hidden;
-  transition: opacity .6s ease, visibility 0s linear 0s;
-}
-.video.is-playing .video__cover { opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
-.video__thumb { width: 100%; height: 100%; object-fit: cover; }
-.video__cover::after {
-  content: ""; position: absolute; inset: 0;
-  background: rgba(17, 17, 17, 0.4); transition: background-color .3s;
-}
-.video__play {
-  position: absolute; left: 50%; top: 50%; z-index: 1;
-  width: 133.333px; height: 133.333px;
-  transform: translate(-50%, -50%);
-  transition: transform .3s;
-}
-.video__cover:hover::after { background: rgba(17, 17, 17, 0.3); }
-.video__cover:hover .video__play { transform: translate(-50%, -50%) scale(1.06); }
 
 /* Cards */
 .card {
@@ -493,8 +482,8 @@ button { font: inherit; cursor: pointer; }
 /* Mobile — matches the 390px Figma mobile frame */
 .menu-btn { display: none; }
 .topnav__brand { display: flex; align-items: center; gap: 8px; }
-@media (max-width: 760px) {
-  .topnav { padding: 0 16px; }
+/* Hamburger menu on tablet and phone */
+@media (max-width: 1024px) {
   .menu-btn {
     display: flex; flex-direction: column; justify-content: center; gap: 4px;
     width: 24px; height: 24px; padding: 3px; border: 0; background: none;
@@ -506,8 +495,6 @@ button { font: inherit; cursor: pointer; }
   .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  .logo { width: 118px; height: 20px; }
-  .logo img { width: 135.07px; height: 27.76px; }
   .topnav__links {
     position: absolute; top: 72px; left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: 4px;
@@ -521,6 +508,13 @@ button { font: inherit; cursor: pointer; }
     transition: opacity .2s, transform .2s;
   }
   .topnav__links a { padding: 12px; font-size: 16px; line-height: 24px; border-radius: 12px; }
+}
+@media (max-width: 760px) {
+  .topnav { padding: 0 16px; }
+  .video { --crop: 56px; }
+  .video__sound { right: 12px; bottom: 12px; width: 36px; height: 36px; }
+  .logo { width: 118px; height: 20px; }
+  .logo img { width: 135.07px; height: 27.76px; }
 
   .page { padding: 0 12px 12px; }
 
@@ -544,7 +538,6 @@ button { font: inherit; cursor: pointer; }
   .section--tall { min-height: 0; }
 
   /* Video */
-  .video__play { width: 64px; height: 64px; }
 
   /* Feature cards */
   .features { grid-template-columns: 1fr; }
@@ -638,20 +631,6 @@ button { font: inherit; cursor: pointer; }
 .reveal:not(.is-visible) .f-ask__img { transform: translateX(48px); opacity: 0; }
 .reveal:not(.is-visible) .f-organise__img { transform: translateY(40px); }
 
-/* Video: soft pulse behind the play button */
-.video__pulse {
-  position: absolute; left: 50%; top: 50%; z-index: 1;
-  width: 120px; height: 120px; margin: -60px 0 0 -60px;
-  border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.7);
-  animation: pulse 2.4s cubic-bezier(.2, .7, .2, 1) infinite;
-  pointer-events: none;
-}
-@keyframes pulse {
-  from { transform: scale(.9); opacity: .8; }
-  to { transform: scale(1.6); opacity: 0; }
-}
-.video__thumb { transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
-.video__cover:hover .video__thumb { transform: scale(1.03); }
 
 /* Testimonial dots */
 .dot img { transition: transform .3s; }
@@ -670,10 +649,9 @@ a:focus-visible, button:focus-visible {
 .cta a:focus-visible { outline-color: var(--white); }
 
 @media (max-width: 760px) {
-  .video__pulse { width: 60px; height: 60px; margin: -30px 0 0 -30px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .models__track, .hero__ellipse, .video__pulse, .hero h1 .accent, .search-glow { animation: none; }
+  .models__track, .hero__ellipse, .hero h1 .accent, .search-glow { animation: none; }
   .search-spark, .search-halo { display: none; }
   .hero-in { animation: none; opacity: 1; }
   .reveal, .reveal * { opacity: 1 !important; transform: none !important; transition: none !important; }
