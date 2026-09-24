@@ -412,7 +412,7 @@ h1, h2, h3, .section__head p, .card__text p, .cta__copy p, .hero__copy p { text-
 .testimonials__viewport { width: 1312px; max-width: calc(100% - 176px); overflow: hidden; }
 .testimonials__track { display: flex; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
 .quote {
-  flex: 0 0 100%; margin: 0;
+  flex: 0 0 100%; min-width: 0; margin: 0;
   display: flex; flex-direction: column; align-items: center; gap: 32px;
   padding: 0 50px;
 }
@@ -421,7 +421,7 @@ h1, h2, h3, .section__head p, .card__text p, .cta__copy p, .hero__copy p { text-
 }
 .quote figcaption { display: flex; align-items: center; gap: 20px; }
 .quote figcaption img { width: 56px; height: 56px; }
-.quote figcaption span {
+.quote figcaption span:not(.quote__initials) {
   display: flex; flex-direction: column;
   font-family: "Roboto", sans-serif; font-size: 16px; line-height: 1.5; color: var(--black); white-space: nowrap;
 }
@@ -593,6 +593,10 @@ h1, h2, h3, .section__head p, .card__text p, .cta__copy p, .hero__copy p { text-
   .testimonials__viewport { max-width: none; flex: 1; }
   .quote { padding: 0; gap: 32px; }
   .quote blockquote { font-size: 14px; line-height: 1.5; }
+  .quote figcaption { gap: 14px; }
+  .quote figcaption span:not(.quote__initials) { white-space: normal; }
+  .quote figcaption img, .quote__initials { width: 48px; height: 48px; }
+  .quote__initials { font-size: 16px; }
 
   /* CTA + footer */
   .cta { height: auto; min-height: 400px; }
