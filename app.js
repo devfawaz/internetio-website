@@ -165,20 +165,21 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   }
   soundBtn.addEventListener("click", () => setSound(player.isMuted()));
 
-  // YouTube shows its title bar for the first seconds of playback, on pause and at the
-  // end screen, even with controls off — keep our cover over the video during those moments.
-  let chromeTimer;
-  function watchChrome() {
+  // YouTube flashes its title bar whenever playback (re)starts — first play, resume after
+  // scrolling back, each loop — plus overlays on pause and at the end screen, even with
+  // controls off. Keep our cover on top until playback has run uninterrupted for a few seconds.
+  let chromeTimer, playingSince = 0;
+  function watchChrome(e) {
     clearInterval(chromeTimer);
+    const playing = e && e.data === YT.PlayerState.PLAYING;
+    playingSince = playing ? performance.now() : 0;
     const check = () => {
-      const playing = player.getPlayerState() === YT.PlayerState.PLAYING;
       const t = player.getCurrentTime(), d = player.getDuration();
-      const clean = playing && t > 4 && (!d || d - t > 1.5);
-      box.classList.toggle("is-playing", clean);
-      if (!playing) clearInterval(chromeTimer);
+      const settled = playingSince && performance.now() - playingSince > 3500;
+      box.classList.toggle("is-playing", Boolean(settled && (!d || d - t > 1.5)));
     };
     check();
-    chromeTimer = setInterval(check, 250);
+    if (playing) chromeTimer = setInterval(check, 200);
   }
 
   function sync() {
