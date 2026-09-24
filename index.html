@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=1790262774" />
+  <link rel="stylesheet" href="style.css?v=1790263032" />
 </head>
 <body>
   <header class="topnav">
@@ -84,8 +84,9 @@
         <h2>Watch how it works</h2>
         <p>A quick tour of internet.io, from your first question to saved answers and custom agents.</p>
       </div>
-      <div class="video" id="video" data-youtube-id="u0920Cc9V_I">
-        <div class="video__player" id="yt-player"></div>
+      <div class="video" id="video">
+        <video class="video__el" src="assets/walkthrough.mp4" poster="assets/walkthrough-poster.jpg"
+          muted loop playsinline preload="none" aria-label="internet.io walkthrough video"></video>
         <button class="video__sound" type="button" aria-label="Turn sound on" aria-pressed="false">
           <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
           <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
@@ -297,6 +298,6 @@
     </footer>
   </section>
 
-  <script src="app.js?v=1790262774"></script>
+  <script src="app.js?v=1790263032"></script>
 </body>
 </html>

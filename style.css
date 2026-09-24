@@ -276,22 +276,14 @@ button { font: inherit; cursor: pointer; }
 }
 .section__head p { font-size: 16px; line-height: 24px; }
 
-/* Video: the player is taller than the frame so YouTube letterboxes the video into bars
-   above/below it; its title bar and overlays live in those bars, which the frame crops off. */
+/* Video: self-hosted MP4, muted autoplay in view, no browser controls */
 .video {
-  --crop: 80px;
   position: relative; width: 100%; max-width: 1200px; aspect-ratio: 1200 / 675;
   border-radius: 24px; overflow: hidden;
   background: radial-gradient(ellipse at center, #fafafa, #e4e4e4);
   isolation: isolate;
 }
-/* YT.Player swaps the placeholder div for its iframe, so target both */
-.video__player, .video > iframe {
-  position: absolute; left: 0; right: 0; top: calc(var(--crop) * -1);
-  width: 100%; height: calc(100% + var(--crop) * 2); border: 0;
-  opacity: 0; transition: opacity .8s ease; pointer-events: none;
-}
-.video.has-started > iframe { opacity: 1; }
+.video__el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .video__sound {
   position: absolute; right: 20px; bottom: 20px; z-index: 3;
   width: 44px; height: 44px; display: grid; place-items: center;
@@ -516,7 +508,6 @@ h1, h2, h3, .section__head p, .card__text p, .cta__copy p, .hero__copy p { text-
 }
 @media (max-width: 760px) {
   .topnav { padding: 0 16px; }
-  .video { --crop: 56px; }
   .video__sound { right: 12px; bottom: 12px; width: 36px; height: 36px; }
   .logo { width: 118px; height: 20px; }
   .logo img { width: 135.07px; height: 27.76px; }

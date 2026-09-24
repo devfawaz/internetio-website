@@ -131,66 +131,31 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   );
 }
 
-// Walkthrough video: YouTube, muted autoplay once it scrolls into view, no YouTube UI.
-// YouTube still flashes its own buttons for a few seconds whenever playback starts or
-// resumes, and shows an end screen when a video finishes. So: the player stays invisible
-// until it has played cleanly for a moment, it is never paused afterwards (resuming would
-// bring the buttons back), and it loops by seeking to the start before the end screen.
+// Walkthrough video: muted autoplay while at least half is on screen, paused otherwise.
 (() => {
   const box = document.getElementById("video");
-  const id = box.dataset.youtubeId;
+  const video = box.querySelector("video");
   const soundBtn = box.querySelector(".video__sound");
-  let player, ready = false, inView = false, started = false, apiRequested = false, revealTimer;
 
-  function loadApi() {
-    if (apiRequested) return;
-    apiRequested = true;
-    window.onYouTubeIframeAPIReady = () => {
-      player = new YT.Player("yt-player", {
-        videoId: id,
-        playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3 },
-        events: {
-          onReady: () => { ready = true; maybeStart(); },
-          onStateChange: (e) => {
-            clearTimeout(revealTimer);
-            if (e.data === YT.PlayerState.PLAYING && !box.classList.contains("has-started")) {
-              revealTimer = setTimeout(() => box.classList.add("has-started"), 3500);
-            }
-            if (e.data === YT.PlayerState.ENDED) { player.seekTo(0, true); player.playVideo(); }
-          },
-        },
-      });
-    };
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-  }
+  video.addEventListener("playing", () => box.classList.add("has-started"), { once: true });
 
-  function maybeStart() {
-    if (!ready || !inView || started) return;
-    started = true;
-    player.playVideo();
-    // loop just before the end so YouTube's end screen never shows
-    setInterval(() => {
-      const d = player.getDuration(), t = player.getCurrentTime();
-      if (d && d - t < 0.6) player.seekTo(0, true);
-    }, 250);
-  }
+  soundBtn.addEventListener("click", () => {
+    video.muted = !video.muted;
+    if (!video.muted) video.volume = 0.8;
+    soundBtn.setAttribute("aria-pressed", !video.muted);
+    soundBtn.setAttribute("aria-label", video.muted ? "Turn sound on" : "Mute video");
+  });
 
-  function setSound(on) {
-    if (!ready) return;
-    if (on) { player.unMute(); player.setVolume(80); } else player.mute();
-    soundBtn.setAttribute("aria-pressed", on);
-    soundBtn.setAttribute("aria-label", on ? "Mute video" : "Turn sound on");
-  }
-  soundBtn.addEventListener("click", () => setSound(player.isMuted()));
+  const play = () => video.play().catch(() => {});
+  if (!("IntersectionObserver" in window)) { video.preload = "auto"; play(); return; }
 
-  if (!("IntersectionObserver" in window)) { inView = true; loadApi(); return; }
-  new IntersectionObserver((entries) => {
-    if (entries.some((e) => e.isIntersecting)) loadApi();
-  }, { rootMargin: "400px 0px" }).observe(box);
+  // start buffering a little before it scrolls into view
+  new IntersectionObserver(([e], obs) => {
+    if (e.isIntersecting) { video.preload = "auto"; video.load(); obs.disconnect(); }
+  }, { rootMargin: "600px 0px" }).observe(box);
+
   new IntersectionObserver(([e]) => {
-    inView = e.intersectionRatio >= 0.5;
-    maybeStart();
+    if (e.intersectionRatio >= 0.5) play();
+    else video.pause();
   }, { threshold: [0, 0.5] }).observe(box);
 })();
