@@ -44,19 +44,19 @@
 
       <div class="hero__content">
         <div class="hero__copy">
-          <h1>Ask once. <span class="accent">See how every AI thinks.</span></h1>
-          <p>Compare answers from top AI models — OpenAI, Grok, Perplexity, Meta, and more.</p>
+          <h1 class="hero-in" style="--d:0">Ask once. <span class="accent">See how every AI thinks.</span></h1>
+          <p class="hero-in" style="--d:1">Compare answers from top AI models — OpenAI, Grok, Perplexity, Meta, and more.</p>
         </div>
 
-        <form class="search" id="search-form" role="search">
+        <form class="search hero-in" style="--d:2" id="search-form" role="search">
           <img class="search__icon" src="assets/icon-search.svg" width="24" height="24" alt="" />
           <label class="sr-only" for="search-input">Ask anything</label>
           <input id="search-input" type="text" autocomplete="off" placeholder="Summarise this article and cross-check it for bias" />
         </form>
 
-        <p class="hero__note">Try it now. It’s Free during beta.</p>
+        <p class="hero__note hero-in" style="--d:3">Try it now. It’s Free during beta.</p>
 
-        <a class="ph-badge" href="#" aria-label="Voted Top 10 on Product Hunt">
+        <a class="ph-badge hero-in" style="--d:4" href="https://www.producthunt.com/products/internet-io" target="_blank" rel="noopener noreferrer" aria-label="Voted Top 10 on Product Hunt">
           <img src="assets/product-hunt.svg" width="32" height="32" alt="" />
           <span>
             <small>voted Top 10 on</small>
@@ -65,7 +65,7 @@
         </a>
       </div>
 
-      <div class="models" aria-label="Supported AI models">
+      <div class="models hero-in" style="--d:5" aria-label="Supported AI models">
         <div class="models__track" id="models-track"></div>
       </div>
     </section>
@@ -78,6 +78,7 @@
       </div>
       <button class="video" type="button" aria-label="Play walkthrough video">
         <img class="video__thumb" src="assets/video-thumb.png" alt="" />
+        <span class="video__pulse" aria-hidden="true"></span>
         <img class="video__play" src="assets/play-circle.svg" width="133.333" height="133.333" alt="" />
       </button>
     </section>

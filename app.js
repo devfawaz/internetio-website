@@ -23,7 +23,7 @@ track.querySelectorAll(".chip").forEach((el, i) => {
   if (i >= MODELS.length * 2) el.setAttribute("aria-hidden", "true");
 });
 
-// Hero search — cycle example prompts in the placeholder until the user types
+// Hero search — typewriter through example prompts until the user types
 const input = document.getElementById("search-input");
 const prompts = [
   "Summarise this article and cross-check it for bias",
@@ -31,12 +31,22 @@ const prompts = [
   "Write a cold email for my startup pitch",
   "Which is faster for this query: SQL or NoSQL?",
 ];
-let p = 0;
-setInterval(() => {
-  if (document.activeElement === input || input.value) return;
-  p = (p + 1) % prompts.length;
-  input.placeholder = prompts[p];
-}, 3500);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const idle = () => document.activeElement !== input && !input.value;
+if (!reduceMotion) {
+  let p = 0, i = prompts[0].length, deleting = false;
+  (function tick() {
+    let wait = deleting ? 22 : 45;
+    if (idle()) {
+      const text = prompts[p];
+      i += deleting ? -1 : 1;
+      input.placeholder = text.slice(0, i);
+      if (!deleting && i >= text.length) { deleting = true; wait = 2600; }
+      else if (deleting && i <= 0) { deleting = false; p = (p + 1) % prompts.length; wait = 350; }
+    }
+    setTimeout(tick, wait);
+  })();
+}
 
 document.getElementById("search-form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -57,6 +67,8 @@ let current = 0;
 
 function go(i) {
   current = (i + total) % total;
+  const stars = tTrack.children[current].querySelector("img");
+  stars.classList.remove("stars-pop"); void stars.offsetWidth; stars.classList.add("stars-pop");
   tTrack.style.transform = `translateX(-${current * 100}%)`;
   dots.forEach((d, j) => {
     d.classList.toggle("is-active", j === current);
@@ -79,3 +91,28 @@ function setMenu(open) {
 menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
 document.querySelectorAll("#primary-nav a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
 document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
+
+// Header hairline on scroll
+const onScroll = () => nav.classList.toggle("is-scrolled", scrollY > 8);
+addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+// Scroll reveal — cards stagger within their row
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const groups = [
+    [".section__head, .video, .testimonials__title, .testimonials, .cta__inner", 1],
+    [".features > .card", 2], [".agents > .card", 2], [".user", 3],
+  ];
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  groups.forEach(([sel, per]) =>
+    document.querySelectorAll(sel).forEach((el, n) => {
+      el.classList.add("reveal");
+      el.style.setProperty("--i", n % per);
+      io.observe(el);
+    })
+  );
+}
