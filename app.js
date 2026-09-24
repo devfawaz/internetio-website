@@ -67,3 +67,15 @@ function go(i) {
 document.getElementById("t-prev").addEventListener("click", () => go(current - 1));
 document.getElementById("t-next").addEventListener("click", () => go(current + 1));
 dots.forEach((d, i) => d.addEventListener("click", () => go(i)));
+
+// Mobile menu
+const nav = document.querySelector(".topnav");
+const menuBtn = document.getElementById("menu-btn");
+function setMenu(open) {
+  nav.classList.toggle("is-open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+}
+menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
+document.querySelectorAll("#primary-nav a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));

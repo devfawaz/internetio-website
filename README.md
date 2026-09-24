@@ -10,7 +10,8 @@ Plain HTML, CSS and JS with no build step. Inter and Roboto come from Google Fon
 - Model chips marquee that loops and pauses on hover
 - Hero search input that cycles through example prompts
 - Testimonial slider with arrow and dot controls
-- Responsive layouts for desktop, tablet and mobile
+- Mobile layout matched to the 390px Figma mobile frame, with a hamburger menu
+- Responsive tablet layout in between
 
 ## Run locally
 ```bash

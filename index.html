@@ -13,10 +13,15 @@
 <body>
   <header class="topnav">
     <div class="topnav__inner">
-      <a href="#" class="logo" aria-label="internet.io home">
-        <img src="assets/logo.svg" width="162.545" height="33.4038" alt="internet.io" />
-      </a>
-      <nav class="topnav__links" aria-label="Primary">
+      <div class="topnav__brand">
+        <button class="menu-btn" type="button" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <a href="#" class="logo" aria-label="internet.io home">
+          <img src="assets/logo.svg" width="162.545" height="33.4038" alt="internet.io" />
+        </a>
+      </div>
+      <nav class="topnav__links" id="primary-nav" aria-label="Primary">
         <a href="#features">Features</a>
         <a href="#agents">AI Agents</a>
         <a href="#use-cases">Use Cases</a>
@@ -264,7 +269,7 @@
     <div class="cta__inner">
       <div class="cta__copy">
         <h2>Ready to see how every AI thinks?</h2>
-        <p>Ask a question. Compare answers. It’s free during beta.</p>
+        <p>Ask a question. Compare answers. <span class="cta__br">It’s free during beta.</span></p>
       </div>
       <a href="#try" class="btn btn--light" id="cta-ask">
         <span>Ask your first question</span>
