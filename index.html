@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>internet.io — Ask once. See how every AI thinks.</title>
+  <meta name="description" content="Compare answers from top AI models — OpenAI, Grok, Perplexity, Meta, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topnav">
+    <div class="topnav__inner">
+      <a href="#" class="logo" aria-label="internet.io home">
+        <img src="assets/logo.svg" width="162.545" height="33.4038" alt="internet.io" />
+      </a>
+      <nav class="topnav__links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#agents">AI Agents</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#try" class="btn btn--primary">Try it now</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Hero -->
+    <section class="hero" id="try">
+      <div class="hero__bg" aria-hidden="true">
+        <img class="hero__ellipse hero__ellipse--1" src="assets/ellipse-blue.svg" width="2036" height="2036" alt="" />
+        <img class="hero__ellipse hero__ellipse--2" src="assets/ellipse-cyan.svg" width="2036" height="2036" alt="" />
+        <img class="hero__ellipse hero__ellipse--3" src="assets/ellipse-sky.svg" width="2036" height="2036" alt="" />
+        <div class="hero__wash"></div>
+      </div>
+
+      <div class="hero__content">
+        <div class="hero__copy">
+          <h1>Ask once. <span class="accent">See how every AI thinks.</span></h1>
+          <p>Compare answers from top AI models — OpenAI, Grok, Perplexity, Meta, and more.</p>
+        </div>
+
+        <form class="search" id="search-form" role="search">
+          <img class="search__icon" src="assets/icon-search.svg" width="24" height="24" alt="" />
+          <label class="sr-only" for="search-input">Ask anything</label>
+          <input id="search-input" type="text" autocomplete="off" placeholder="Summarise this article and cross-check it for bias" />
+        </form>
+
+        <p class="hero__note">Try it now. It’s Free during beta.</p>
+
+        <a class="ph-badge" href="#" aria-label="Voted Top 10 on Product Hunt">
+          <img src="assets/product-hunt.svg" width="32" height="32" alt="" />
+          <span>
+            <small>voted Top 10 on</small>
+            <strong>Product Hunt</strong>
+          </span>
+        </a>
+      </div>
+
+      <div class="models" aria-label="Supported AI models">
+        <div class="models__track" id="models-track"></div>
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section class="section section--video">
+      <div class="section__head">
+        <h2>Watch how it works</h2>
+        <p>A quick walkthrough of how internet.io works — from asking your first question to saving answers and exploring agents.</p>
+      </div>
+      <button class="video" type="button" aria-label="Play walkthrough video">
+        <img class="video__thumb" src="assets/video-thumb.png" alt="" />
+        <img class="video__play" src="assets/play-circle.svg" width="133.333" height="133.333" alt="" />
+      </button>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="section__head">
+        <h2>What you can do with internet.io</h2>
+        <p>Everything you need to explore, compare, and create — all in one place.</p>
+      </div>
+
+      <div class="features">
+        <article class="card f-ask">
+          <div class="f-ask__media">
+            <div class="f-ask__img"><img src="assets/feature-ask.png" alt="Search bar reading “Ask us anything”" /></div>
+          </div>
+          <div class="card__text card__text--center">
+            <h3>Ask Like You Always Do</h3>
+            <p>Type your question like a normal search—simple, familiar, and powered by top AI models.</p>
+          </div>
+        </article>
+
+        <article class="card f-answers">
+          <img class="img-fluid" style="aspect-ratio:832/447" src="assets/feature-answers.png" alt="" />
+          <div class="card__text">
+            <h3>See multiple answers instantly</h3>
+            <p>Compare logic, tone, and creativity across models. Pick what clicks.</p>
+          </div>
+        </article>
+
+        <article class="card f-save">
+          <div class="card__text">
+            <h3>Save Your Best Replies</h3>
+            <p>Never lose track of something valuable. Save standout replies and find them fast.</p>
+          </div>
+          <div class="f-save__media">
+            <img class="img-fluid shadow-up" style="aspect-ratio:806/508" src="assets/feature-save.png" alt="" />
+          </div>
+        </article>
+
+        <article class="card f-organise">
+          <div class="card__text card__text--pad">
+            <h3>Keep Everything Organised</h3>
+            <p>Group your chats and messages into folders. Revisit anything, anytime.</p>
+          </div>
+          <div class="f-organise__media">
+            <div class="f-organise__img"><img src="assets/feature-organise.png" alt="" /></div>
+          </div>
+        </article>
+
+        <article class="card f-prioritise">
+          <div class="card__media"><img class="shadow-up" style="aspect-ratio:800/968" src="assets/feature-prioritise.png" alt="" /></div>
+          <div class="card__text">
+            <h3>Prioritise What You See First</h3>
+            <p>Drag and drop to reorder models. Keep your favourites up front.</p>
+          </div>
+        </article>
+
+        <article class="card f-voice">
+          <div class="card__media"><img class="shadow-up" style="aspect-ratio:2400/1900" src="assets/feature-voice.png" alt="" /></div>
+          <div class="card__text">
+            <h3>Make AI Talk Like You</h3>
+            <p>Set your own voice, tone, or style. Always on, always consistent.</p>
+          </div>
+        </article>
+
+        <article class="card f-profiles">
+          <div class="card__media"><img class="shadow-up" style="aspect-ratio:800/824" src="assets/feature-profiles.png" alt="" /></div>
+          <div class="card__text">
+            <h3>Create Up to 3 Profiles</h3>
+            <p>Switch between work, fun, or shared profiles. Stay focused and organised.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Agents -->
+    <section class="section section--tall" id="agents">
+      <div class="section__head">
+        <h2>Explore and build your own AI agents</h2>
+        <p>Need a writing coach? Startup advisor? Roastbot? You’ll find one. Or build your own.<br />Explore prebuilt agents or create your own with a custom tone, role, and mindset.</p>
+      </div>
+      <div class="agents">
+        <article class="card">
+          <div class="agents__media"><img class="img-fluid shadow-up rounded-12" style="aspect-ratio:2800/1726" src="assets/agents-discover.png" alt="" /></div>
+          <div class="card__text">
+            <h3>Discover AI Agents for Every Task</h3>
+            <p>Browse agents made for writing, coding, productivity and more.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="agents__media"><img class="img-fluid shadow-up rounded-12" style="aspect-ratio:2800/1726" src="assets/agents-build.png" alt="" /></div>
+          <div class="card__text">
+            <h3>Build AI Agents, Your Way</h3>
+            <p>Give it a name, tone, and job description. Save and reuse with one click — no code needed.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section class="section section--tall" id="use-cases">
+      <div class="section__head">
+        <h2>Built for every kind of user</h2>
+        <p>From devs and writers to students and founders — internet.io fits right in.</p>
+      </div>
+      <div class="users">
+        <article class="user">
+          <img src="assets/user-student.png" width="27" height="32" alt="" />
+          <div><h3>Student</h3><p>Summarise, compare, and learn faster<br />Get diverse answers to understand complex topics deeply.</p></div>
+        </article>
+        <article class="user">
+          <img src="assets/user-writer.png" width="32" height="31" alt="" />
+          <div><h3>Writer</h3><p>Try tone rewrites or outlines<br />Compare style, structure, and creativity across models.</p></div>
+        </article>
+        <article class="user">
+          <img src="assets/user-developer.png" width="32" height="32" alt="" />
+          <div><h3>Developer</h3><p>Code, compare, and fix<br />Ask once, get multiple AI takes. Spot better logic. Build smarter.</p></div>
+        </article>
+        <article class="user">
+          <img src="assets/user-founder.png" width="32" height="32" alt="" />
+          <div><h3>Founder</h3><p>Test your ideas before the pitch<br />See how different models react to your messaging — fast.</p></div>
+        </article>
+        <article class="user">
+          <img src="assets/user-researcher.png" width="32" height="32" alt="" />
+          <div><h3>Researcher</h3><p>Detect bias and missing context<br />Cross-check facts or spot hallucinations from multiple models.</p></div>
+        </article>
+        <article class="user">
+          <img src="assets/user-prompt.png" width="32" height="32" alt="" />
+          <div><h3>Prompt Engineer</h3><p>See how prompts actually work<br />Instantly test and compare model behaviour without switching tabs.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section section--testimonials" id="testimonials">
+      <h2 class="testimonials__title">5,000+ users are already asking smarter</h2>
+      <div class="testimonials">
+        <div class="testimonials__row">
+          <button class="icon-btn" type="button" id="t-prev" aria-label="Previous testimonial"><img src="assets/arrow-prev.svg" width="24" height="24" alt="" /></button>
+          <div class="testimonials__viewport">
+            <div class="testimonials__track" id="t-track">
+              <figure class="quote">
+                <img src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
+                <blockquote>
+                  <p>“Absolutely love this! Instead of just getting one AI answer, you can see a few different ones side by side and pick the best. Proper handy for research, brainstorming, or just settling random debates.</p>
+                  <p>Dead easy to use—just type your question like a normal search, and it does the rest. The option to save and organise answers is a nice touch too. No more scrolling back through old chats or copy-pasting into notes.”</p>
+                </blockquote>
+                <figcaption>
+                  <img src="assets/avatar.png" width="56" height="56" alt="" />
+                  <span><strong>Fred Hartley</strong><span>Tech Project Manager</span></span>
+                </figcaption>
+              </figure>
+              <figure class="quote">
+                <img src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
+                <blockquote>
+                  <p>“I used to keep four tabs open just to compare answers. Now I ask once and see every model side by side. Spotting where they disagree has made my research so much sharper.”</p>
+                </blockquote>
+                <figcaption>
+                  <img src="assets/avatar.png" width="56" height="56" alt="" />
+                  <span><strong>Sample Reviewer</strong><span>Placeholder testimonial</span></span>
+                </figcaption>
+              </figure>
+              <figure class="quote">
+                <img src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
+                <blockquote>
+                  <p>“The custom agents are brilliant. I set one up with my writing voice and it just gets it every time. Saving the best replies into folders keeps everything tidy.”</p>
+                </blockquote>
+                <figcaption>
+                  <img src="assets/avatar.png" width="56" height="56" alt="" />
+                  <span><strong>Sample Reviewer</strong><span>Placeholder testimonial</span></span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+          <button class="icon-btn" type="button" id="t-next" aria-label="Next testimonial"><img src="assets/arrow-next.svg" width="24" height="24" alt="" /></button>
+        </div>
+        <div class="dots" id="t-dots" role="tablist" aria-label="Choose testimonial">
+          <button type="button" class="dot is-active" aria-label="Testimonial 1"><img src="assets/dot-active.svg" width="8" height="8" alt="" /></button>
+          <button type="button" class="dot" aria-label="Testimonial 2"><img src="assets/dot.svg" width="8" height="8" alt="" /></button>
+          <button type="button" class="dot" aria-label="Testimonial 3"><img src="assets/dot.svg" width="8" height="8" alt="" /></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CTA + footer -->
+  <section class="cta" id="contact">
+    <div class="cta__inner">
+      <div class="cta__copy">
+        <h2>Ready to see how every AI thinks?</h2>
+        <p>Ask a question. Compare answers. It’s free during beta.</p>
+      </div>
+      <a href="#try" class="btn btn--light" id="cta-ask">
+        <span>Ask your first question</span>
+        <img src="assets/icon-right.svg" width="18" height="18" alt="" />
+      </a>
+    </div>
+    <footer class="footer">
+      <p>internet.com© 2024. All rights reserved.</p>
+      <nav aria-label="Legal">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#contact">Contact Us</a>
+      </nav>
+    </footer>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

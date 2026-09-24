@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="AI Icons">
+<rect width="40" height="40" rx="8" fill="black"/>
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11.2651 6L19.2046 13.315V13.3136V6.01673H20.75V13.3478L28.7259 6V14.3404H32V26.3704H28.7356V33.7969L20.7507 26.7816V33.8778H19.2053V26.8974L11.2741 33.8827V26.3711H8V14.3404H11.2658V6H11.2651ZM18.0398 15.867H9.5454V24.8438H11.272V22.0123L18.0398 15.867ZM12.8195 22.6899V30.4761L19.2046 24.8522V16.8903L12.8195 22.6899ZM20.7954 24.7776V16.8826L27.1826 22.6829V26.3711H27.1909V30.3966L20.7954 24.7776ZM28.7356 24.8438H30.4546V15.867H22.0236L28.7356 21.9489V24.8438ZM27.1805 14.3404V9.51182L21.9392 14.3404H27.1805ZM18.0517 14.3404H12.8105V9.51182L18.0517 14.3404Z" fill="url(#paint0_linear_0_306)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_306" x1="10.6496" y1="4.33401" x2="28.4024" y2="33.967" gradientUnits="userSpaceOnUse">
+<stop offset="0.002" stop-color="#9C55D4"/>
+<stop offset="0.003" stop-color="#20808D"/>
+<stop offset="0.373" stop-color="#218F9B"/>
+<stop offset="1" stop-color="#22B1BC"/>
+</linearGradient>
+</defs>
+</svg>
