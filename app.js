@@ -206,7 +206,6 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   }, { rootMargin: "400px 0px" }).observe(box);
   new IntersectionObserver(([e]) => {
     inView = e.intersectionRatio >= 0.5;
-    if (reduceMotion && !userStarted) return;
     sync();
   }, { threshold: [0, 0.5] }).observe(box);
 })();
