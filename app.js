@@ -133,9 +133,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
         playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, loop: 1, playlist: id, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3 },
         events: {
           onReady: () => { ready = true; sync(); },
-          onStateChange: (e) => {
-            if (e.data === YT.PlayerState.PLAYING) box.classList.add("is-playing");
-          },
+          onStateChange: watchChrome,
         },
       });
     };
@@ -152,6 +150,22 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     soundBtn.setAttribute("aria-label", on ? "Mute video" : "Turn sound on");
   }
   soundBtn.addEventListener("click", () => setSound(player.isMuted()));
+
+  // YouTube shows its title bar for the first seconds of playback, on pause and at the
+  // end screen, even with controls off — keep our cover over the video during those moments.
+  let chromeTimer;
+  function watchChrome() {
+    clearInterval(chromeTimer);
+    const check = () => {
+      const playing = player.getPlayerState() === YT.PlayerState.PLAYING;
+      const t = player.getCurrentTime(), d = player.getDuration();
+      const clean = playing && t > 4 && (!d || d - t > 1.5);
+      box.classList.toggle("is-playing", clean);
+      if (!playing) clearInterval(chromeTimer);
+    };
+    check();
+    chromeTimer = setInterval(check, 250);
+  }
 
   function sync() {
     if (!ready) return;

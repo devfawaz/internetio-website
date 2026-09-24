@@ -156,10 +156,38 @@ button { font: inherit; cursor: pointer; }
   transition: box-shadow .3s, transform .3s;
 }
 .search:hover { box-shadow: var(--shadow-hero), 0 12px 32px rgba(41, 121, 255, 0.12); }
-.search:focus-within {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hero), 0 16px 40px rgba(41, 121, 255, 0.16), 0 0 0 4px rgba(41, 121, 255, 0.12);
+
+/* Running glow stroke + soft halo behind the search bar */
+@property --search-angle { syntax: "<angle>"; initial-value: 0deg; inherits: true; }
+.search-shell {
+  position: relative; width: 100%; max-width: 800px;
+  animation: search-orbit 4.5s linear infinite;
+  transition: transform .3s;
 }
+.search-shell.hero-in { animation: rise .9s cubic-bezier(.2, .7, .2, 1) forwards, search-orbit 4.5s linear infinite; animation-delay: calc(var(--d, 0) * 110ms + 100ms), 0s; }
+@keyframes search-orbit { to { --search-angle: 360deg; } }
+.search-shell .search {
+  position: relative; z-index: 1; max-width: none;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--white), var(--white)) padding-box,
+    conic-gradient(from var(--search-angle),
+      var(--blue-600) 0deg, var(--blue-600) 220deg,
+      #4fabfd 270deg, #a5e6ff 300deg, #32c6fe 320deg, var(--blue-600) 360deg) border-box;
+}
+.search-glow {
+  position: absolute; inset: -6px; z-index: 0; border-radius: 56px;
+  background: conic-gradient(from var(--search-angle),
+    rgba(41, 121, 255, 0.28) 0deg, rgba(41, 121, 255, 0.28) 220deg,
+    rgba(79, 171, 253, 0.75) 280deg, rgba(50, 198, 254, 0.9) 310deg, rgba(41, 121, 255, 0.28) 360deg);
+  filter: blur(22px);
+  animation: search-breathe 3.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes search-breathe { from { opacity: .55; transform: scale(.98); } to { opacity: .95; transform: scale(1.03); } }
+.search-shell:focus-within { transform: translateY(-2px); }
+.search-shell:focus-within .search-glow { opacity: 1; animation-play-state: paused; }
+.search-shell:focus-within .search { box-shadow: var(--shadow-hero), 0 0 0 4px rgba(41, 121, 255, 0.12); }
 .search__icon { width: 30px; height: 30px; flex-shrink: 0; }
 .search input {
   flex: 1; min-width: 0; height: 20px;
@@ -184,11 +212,13 @@ button { font: inherit; cursor: pointer; }
 
 /* Model chips marquee */
 .models {
-  position: relative; z-index: 1; flex: none; height: 64px; margin-bottom: 85px;
+  /* padded so the mask (which clips to this box) covers the chips' borders and drop shadows */
+  box-sizing: content-box; position: relative; z-index: 1; flex: none; height: 64px;
+  padding: 30px 0 36px; margin: -30px 0 49px;
   -webkit-mask-image: url("assets/chips-mask.svg");
   mask-image: url("assets/chips-mask.svg");
-  -webkit-mask-size: 100% 130px; mask-size: 100% 130px;
-  -webkit-mask-position: 0 -30px; mask-position: 0 -30px;
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-position: 0 0; mask-position: 0 0;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   filter:
     drop-shadow(0 2px 2.5px rgba(41, 121, 255, 0.1))
@@ -497,7 +527,7 @@ button { font: inherit; cursor: pointer; }
   .search__icon { width: 24px; height: 24px; }
   .search input { font-size: 16px; text-overflow: ellipsis; }
   .hero__note { margin: 4px 0; }
-  .models { height: 45px; margin-bottom: 64px; }
+  .models { height: 46px; margin-bottom: 28px; }
   .models__track { zoom: 0.7; }
 
   /* Section heads */
@@ -636,7 +666,8 @@ a:focus-visible, button:focus-visible {
   .video__pulse { width: 60px; height: 60px; margin: -30px 0 0 -30px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .models__track, .hero__ellipse, .video__pulse, .hero h1 .accent { animation: none; }
+  .models__track, .hero__ellipse, .video__pulse, .hero h1 .accent, .search-shell, .search-glow { animation: none; }
+  .search-shell { opacity: 1; }
   .hero-in { animation: none; opacity: 1; }
   .reveal, .reveal * { opacity: 1 !important; transform: none !important; transition: none !important; }
   .testimonials__track { transition: none; }

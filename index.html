@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=1790259660" />
+  <link rel="stylesheet" href="style.css?v=1790259841" />
 </head>
 <body>
   <header class="topnav">
@@ -52,11 +52,14 @@
           <p class="hero-in" style="--d:1">Compare answers from top AI models — OpenAI, Grok, Perplexity, Meta, and more.</p>
         </div>
 
-        <form class="search hero-in" style="--d:2" id="search-form" role="search">
+        <div class="search-shell hero-in" style="--d:2">
+        <span class="search-glow" aria-hidden="true"></span>
+        <form class="search" id="search-form" role="search">
           <img class="search__icon" src="assets/icon-search.svg" width="24" height="24" alt="" />
           <label class="sr-only" for="search-input">Ask anything</label>
           <input id="search-input" type="text" autocomplete="off" placeholder="Summarise this article and cross-check it for bias" />
         </form>
+        </div>
 
         <p class="hero__note hero-in" style="--d:3">Try it now. It’s Free during beta.</p>
 
@@ -299,6 +302,6 @@
     </footer>
   </section>
 
-  <script src="app.js?v=1790259660"></script>
+  <script src="app.js?v=1790259841"></script>
 </body>
 </html>
