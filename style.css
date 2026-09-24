@@ -405,14 +405,12 @@ button { font: inherit; cursor: pointer; }
 .dots { display: flex; gap: 9px; padding: 10px; }
 .dot { padding: 0; border: 0; background: none; }
 .quote__rating { min-height: 18.89px; }
-.quote__source {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; line-height: 18px; font-weight: 600; color: var(--ph);
-  padding: 4px 12px 4px 6px; border: 1px solid rgba(255, 97, 84, 0.35); border-radius: 32px;
-  transition: background-color .2s;
+.quote__link {
+  font-family: "Roboto", sans-serif; font-size: 16px; line-height: 1.5; color: var(--black);
+  text-decoration: underline; text-decoration-color: rgba(0, 0, 0, 0.25); text-underline-offset: 3px;
+  transition: text-decoration-color .2s;
 }
-.quote__source:hover { background: rgba(255, 97, 84, 0.06); }
-.quote__source img { width: 20px; height: 20px; }
+.quote__link:hover { text-decoration-color: currentColor; }
 .quote__initials {
   width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%;
   display: grid; place-items: center;
