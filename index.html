@@ -83,6 +83,10 @@
           <span class="video__pulse" aria-hidden="true"></span>
           <img class="video__play" src="assets/play-circle.svg" width="133.333" height="133.333" alt="" />
         </button>
+        <button class="video__sound" type="button" aria-label="Turn sound on" aria-pressed="false">
+          <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+          <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        </button>
       </div>
     </section>
 
@@ -225,7 +229,7 @@
           <div class="testimonials__viewport">
             <div class="testimonials__track" id="t-track">
               <figure class="quote">
-                <img src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
+                <img class="quote__rating" src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
                 <blockquote>
                   <p>“Absolutely love this! Instead of just getting one AI answer, you can see a few different ones side by side and pick the best. Proper handy for research, brainstorming, or just settling random debates.</p>
                   <p>Dead easy to use—just type your question like a normal search, and it does the rest. The option to save and organise answers is a nice touch too. No more scrolling back through old chats or copy-pasting into notes.”</p>
@@ -236,23 +240,27 @@
                 </figcaption>
               </figure>
               <figure class="quote">
-                <img src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
+                <a class="quote__rating quote__source" href="https://www.producthunt.com/products/internet-io?launch=internet-io#comments" target="_blank" rel="noopener noreferrer">
+                  <img src="assets/product-hunt.svg" width="20" height="20" alt="" />Launch comment on Product Hunt
+                </a>
                 <blockquote>
-                  <p>“I used to keep four tabs open just to compare answers. Now I ask once and see every model side by side. Spotting where they disagree has made my research so much sharper.”</p>
+                  <p>“You’ve identified a real pain point in the AI space — the need for cross-checking information across multiple models to find the most accurate response. Your platform elegantly solves this by bringing everything together in one place.”</p>
                 </blockquote>
                 <figcaption>
-                  <img src="assets/avatar.png" width="56" height="56" alt="" />
-                  <span><strong>Sample Reviewer</strong><span>Placeholder testimonial</span></span>
+                  <span class="quote__initials" aria-hidden="true">SH</span>
+                  <span><strong>Shant Hambarsoumian</strong><span>Product Hunt community</span></span>
                 </figcaption>
               </figure>
               <figure class="quote">
-                <img src="assets/stars.svg" width="116" height="18.8889" alt="5 out of 5 stars" />
+                <a class="quote__rating quote__source" href="https://www.producthunt.com/products/internet-io?launch=internet-io#comments" target="_blank" rel="noopener noreferrer">
+                  <img src="assets/product-hunt.svg" width="20" height="20" alt="" />Launch comment on Product Hunt
+                </a>
                 <blockquote>
-                  <p>“The custom agents are brilliant. I set one up with my writing voice and it just gets it every time. Saving the best replies into folders keeps everything tidy.”</p>
+                  <p>“Love it. Your landing page gets straight to the point. Nice how I can try this without signing up too … Very cool, sick domain, and have bookmarked this.”</p>
                 </blockquote>
                 <figcaption>
-                  <img src="assets/avatar.png" width="56" height="56" alt="" />
-                  <span><strong>Sample Reviewer</strong><span>Placeholder testimonial</span></span>
+                  <span class="quote__initials" aria-hidden="true">AB</span>
+                  <span><strong>Andrius Bartulis</strong><span>Product Hunt community</span></span>
                 </figcaption>
               </figure>
             </div>

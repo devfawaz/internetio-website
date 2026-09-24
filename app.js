@@ -67,7 +67,7 @@ let current = 0;
 
 function go(i) {
   current = (i + total) % total;
-  const stars = tTrack.children[current].querySelector("img");
+  const stars = tTrack.children[current].querySelector(".quote__rating");
   stars.classList.remove("stars-pop"); void stars.offsetWidth; stars.classList.add("stars-pop");
   tTrack.style.transform = `translateX(-${current * 100}%)`;
   dots.forEach((d, j) => {
@@ -130,7 +130,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     window.onYouTubeIframeAPIReady = () => {
       player = new YT.Player("yt-player", {
         videoId: id,
-        playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, loop: 1, playlist: id },
+        playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, loop: 1, playlist: id, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3 },
         events: {
           onReady: () => { ready = true; sync(); },
           onStateChange: (e) => {
@@ -144,6 +144,15 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     document.head.appendChild(tag);
   }
 
+  const soundBtn = box.querySelector(".video__sound");
+  function setSound(on) {
+    if (!ready) return;
+    if (on) { player.unMute(); player.setVolume(80); } else player.mute();
+    soundBtn.setAttribute("aria-pressed", on);
+    soundBtn.setAttribute("aria-label", on ? "Mute video" : "Turn sound on");
+  }
+  soundBtn.addEventListener("click", () => setSound(player.isMuted()));
+
   function sync() {
     if (!ready) return;
     const state = player.getPlayerState();
@@ -155,7 +164,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   cover.addEventListener("click", () => {
     userStarted = true;
     loadApi();
-    const start = () => { player.unMute(); player.setVolume(80); player.playVideo(); };
+    const start = () => { setSound(true); player.playVideo(); };
     if (ready) start();
     else {
       const wait = setInterval(() => { if (ready) { clearInterval(wait); start(); } }, 100);
