@@ -23,6 +23,22 @@ track.querySelectorAll(".chip").forEach((el, i) => {
   if (i >= MODELS.length * 2) el.setAttribute("aria-hidden", "true");
 });
 
+// Search orbit — size the SVG outline to the pill so the comet hugs the border
+(() => {
+  const form = document.getElementById("search-form");
+  const rects = document.querySelectorAll(".search-orbit rect");
+  const fit = () => {
+    const { width: w, height: h } = form.getBoundingClientRect();
+    rects.forEach((r) => {
+      r.setAttribute("x", 0.75); r.setAttribute("y", 0.75);
+      r.setAttribute("width", Math.max(0, w - 1.5)); r.setAttribute("height", Math.max(0, h - 1.5));
+      r.setAttribute("rx", (h - 1.5) / 2);
+    });
+  };
+  new ResizeObserver(fit).observe(form);
+  fit();
+})();
+
 // Hero search — typewriter through example prompts until the user types
 const input = document.getElementById("search-input");
 const prompts = [
