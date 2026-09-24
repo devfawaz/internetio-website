@@ -116,3 +116,60 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     })
   );
 }
+
+// Walkthrough video — YouTube, muted autoplay while in view, paused when scrolled away
+(() => {
+  const box = document.getElementById("video");
+  const cover = box.querySelector(".video__cover");
+  const id = box.dataset.youtubeId;
+  let player, ready = false, inView = false, userStarted = false, apiRequested = false;
+
+  function loadApi() {
+    if (apiRequested) return;
+    apiRequested = true;
+    window.onYouTubeIframeAPIReady = () => {
+      player = new YT.Player("yt-player", {
+        videoId: id,
+        playerVars: { mute: 1, playsinline: 1, rel: 0, modestbranding: 1, loop: 1, playlist: id },
+        events: {
+          onReady: () => { ready = true; sync(); },
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.PLAYING) box.classList.add("is-playing");
+          },
+        },
+      });
+    };
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+
+  function sync() {
+    if (!ready) return;
+    const state = player.getPlayerState();
+    if (inView && state !== YT.PlayerState.PLAYING) player.playVideo();
+    if (!inView && state === YT.PlayerState.PLAYING) player.pauseVideo();
+  }
+
+  // Clicking the cover plays with sound
+  cover.addEventListener("click", () => {
+    userStarted = true;
+    loadApi();
+    const start = () => { player.unMute(); player.setVolume(80); player.playVideo(); };
+    if (ready) start();
+    else {
+      const wait = setInterval(() => { if (ready) { clearInterval(wait); start(); } }, 100);
+    }
+  });
+
+  if (!("IntersectionObserver" in window)) return;
+  // Load the player just before it scrolls in; play once half of it is visible
+  new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) loadApi();
+  }, { rootMargin: "400px 0px" }).observe(box);
+  new IntersectionObserver(([e]) => {
+    inView = e.intersectionRatio >= 0.5;
+    if (reduceMotion && !userStarted) return;
+    sync();
+  }, { threshold: [0, 0.5] }).observe(box);
+})();
