@@ -1,4 +1,4 @@
-# internet.io — landing page
+# internet.io: landing page
 
 A 1:1 static build of the internet.io marketing landing page from Figma: *"Ask once. See how every AI thinks."*
 

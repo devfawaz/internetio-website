@@ -276,7 +276,7 @@ button { font: inherit; cursor: pointer; }
 }
 .section__head p { font-size: 16px; line-height: 24px; }
 
-/* Video — the player is taller than the frame so YouTube letterboxes the video into bars
+/* Video: the player is taller than the frame so YouTube letterboxes the video into bars
    above/below it; its title bar and overlays live in those bars, which the frame crops off. */
 .video {
   --crop: 80px;
@@ -398,6 +398,11 @@ button { font: inherit; cursor: pointer; }
 .user div { display: flex; flex-direction: column; gap: 4px; color: var(--neutral-900); }
 .user h3 { font-weight: 600; font-size: 20px; line-height: 1.5; letter-spacing: -0.5px; }
 .user p { font-size: 16px; line-height: 24px; }
+.user__lead { font-weight: 500; color: var(--neutral-1000); }
+
+/* Balanced line breaks: no lonely last words */
+h1, h2, h3, .section__head p, .card__text p, .cta__copy p, .hero__copy p { text-wrap: balance; }
+.user p, .quote blockquote p { text-wrap: pretty; }
 
 /* Testimonials */
 .section--testimonials { min-height: 800px; justify-content: center; gap: 96px; }
@@ -479,7 +484,7 @@ button { font: inherit; cursor: pointer; }
   .card__media img { width: 100%; height: auto; }
   .users { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
 }
-/* Mobile — matches the 390px Figma mobile frame */
+/* Mobile: matches the 390px Figma mobile frame */
 .menu-btn { display: none; }
 .topnav__brand { display: flex; align-items: center; gap: 8px; }
 /* Hamburger menu on tablet and phone */

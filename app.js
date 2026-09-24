@@ -1,4 +1,4 @@
-// Model chips marquee — duplicated once so the loop is seamless
+// Model chips marquee: duplicated once so the loop is seamless
 const MODELS = [
   { name: "Open AI", model: "gpt-4o", icon: "openai.svg", bg: "black", w: 24, h: 24 },
   { name: "Meta AI", model: "meta-llama-3.1", icon: "meta.svg", bg: "white", w: 24, h: 16 },
@@ -23,7 +23,7 @@ track.querySelectorAll(".chip").forEach((el, i) => {
   if (i >= MODELS.length * 2) el.setAttribute("aria-hidden", "true");
 });
 
-// Search glow — trace the pill's outline so the light moves around it at an even pace
+// Search glow: trace the pill's outline so the light moves around it at an even pace
 (() => {
   const shell = document.querySelector(".search-shell");
   const form = document.getElementById("search-form");
@@ -37,7 +37,7 @@ track.querySelectorAll(".chip").forEach((el, i) => {
   fit();
 })();
 
-// Hero search — typewriter through example prompts until the user types
+// Hero search: typewriter through example prompts until the user types
 const input = document.getElementById("search-input");
 const prompts = [
   "Summarise this article and cross-check it for bias",
@@ -65,7 +65,7 @@ if (!reduceMotion) {
 document.getElementById("search-form").addEventListener("submit", (e) => {
   e.preventDefault();
   input.value = "";
-  input.placeholder = "Thanks! internet.io is free during beta — sign-up coming soon.";
+  input.placeholder = "Thanks! internet.io is free during beta. Sign-up is coming soon.";
   input.blur();
 });
 
@@ -111,7 +111,7 @@ const onScroll = () => nav.classList.toggle("is-scrolled", scrollY > 8);
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
-// Scroll reveal — cards stagger within their row
+// Scroll reveal: cards stagger within their row
 if ("IntersectionObserver" in window && !reduceMotion) {
   const groups = [
     [".section__head, .video, .testimonials__title, .testimonials, .cta__inner", 1],
@@ -131,7 +131,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   );
 }
 
-// Walkthrough video — YouTube, muted autoplay once it scrolls into view, no YouTube UI.
+// Walkthrough video: YouTube, muted autoplay once it scrolls into view, no YouTube UI.
 // YouTube still flashes its own buttons for a few seconds whenever playback starts or
 // resumes, and shows an end screen when a video finishes. So: the player stays invisible
 // until it has played cleanly for a moment, it is never paused afterwards (resuming would
